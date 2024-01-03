@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   server.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: selcyilm <selcyilm@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/01/03 21:43:56 by selcyilm      #+#    #+#                 */
+/*   Updated: 2024/01/03 21:46:51 by selcyilm      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
 void	handler(int signum)
@@ -26,7 +38,7 @@ int	main(void)
 
 	pid = getpid();
 	printf("PID IS %d\nWaiting for message..\n", pid);
-	while(1)
+	while (1)
 	{
 		signal(SIGUSR1, handler);
 		signal(SIGUSR2, handler);

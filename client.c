@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   client.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: selcyilm <selcyilm@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/01/03 21:43:50 by selcyilm      #+#    #+#                 */
+/*   Updated: 2024/01/03 21:46:24 by selcyilm      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
 void	ft_error(int err)
@@ -38,7 +50,6 @@ int	main(int ac, char **av)
 	if (ac != 3)
 		ft_error(0);
 	pid = atoi(av[1]);
-
 	if (pid <= 0)
 		ft_error(1);
 	if (!av[2])
