@@ -15,7 +15,6 @@ HEADERS = minitalk.h
 RM = rm -rf
 ###-COLOURS-#####################################
 COLOUR_GREEN=\033[35m
-COLOUR_RED=\033[0;31m
 COLOUR_BLUE=\033[0;36m
 COLOUR_END=\033[0m
 ###-RULES-########################################
