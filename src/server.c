@@ -6,11 +6,11 @@
 /*   By: selcyilm <selcyilm@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/03 21:43:56 by selcyilm      #+#    #+#                 */
-/*   Updated: 2024/01/03 21:46:51 by selcyilm      ########   odam.nl         */
+/*   Updated: 2024/01/04 10:33:40 by selcyilm      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "../include/minitalk.h"
 
 void	handler(int signum)
 {

@@ -1,5 +1,5 @@
-CLIENT = client.c
-SERVER = server.c
+CLIENT = src/client.c
+SERVER = src/server.c
 
 OCLIENT = $(CLIENT:.c=.o)
 OSERVER = $(SERVER:.c=.o)
@@ -16,19 +16,23 @@ RM = rm -rf
 all: $(NCLIENT) $(NSERVER)
 
 $(NSERVER): $(OSERVER)
-	gcc $(CFLAGS) $(SERVER) -o $(NSERVER)
+	@gcc $(CFLAGS) $(SERVER) -o $(NSERVER)
+	@echo "SERVER IS READY"
 
 $(NCLIENT): $(OCLIENT)
-	gcc $(CFLAGS) $(CLIENT) -o $(NCLIENT)
+	@gcc $(CFLAGS) $(CLIENT) -o $(NCLIENT)
+	@echo "CLIENT IS READY"
 
 %.o:%.c
-	gcc $(CFLAGS) -c $< -o $@
+	@gcc $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OCLIENT) $(OSERVER)
+	@$(RM) $(OCLIENT) $(OSERVER)
+	@echo "CLEANING OBJECT FILES..."
 
 fclean: clean
-	$(RM) $(NCLIENT) $(NSERVER)
+	@$(RM) $(NCLIENT) $(NSERVER)
+	@echo "CLEANING EXECUTABLE..."
 
 re: fclean all
 

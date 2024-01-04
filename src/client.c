@@ -6,11 +6,11 @@
 /*   By: selcyilm <selcyilm@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/03 21:43:50 by selcyilm      #+#    #+#                 */
-/*   Updated: 2024/01/03 21:46:24 by selcyilm      ########   odam.nl         */
+/*   Updated: 2024/01/04 10:33:23 by selcyilm      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "../include/minitalk.h"
 
 void	ft_error(int err)
 {
@@ -60,6 +60,6 @@ int	main(int ac, char **av)
 		send_signal(pid, av[2][i]);
 		i++;
 	}
-	send_signal(pid, '\n');
+	send_signal(pid, 0);
 	return (0);
 }
