@@ -1,39 +1,46 @@
+###-SOURCE CODE-#################################
 CLIENT = src/client.c
 SERVER = src/server.c
-
+###-OBJECT FILES-################################
 OCLIENT = $(CLIENT:.c=.o)
 OSERVER = $(SERVER:.c=.o)
-
+###-EXECUTABLE NAMES-############################
 NCLIENT = client
 NSERVER = server
-
+###-FLAGS AND HEADERS-###########################
 CFLAGS = -Wall -Werror -Wextra
-
+CC = cc
 HEADERS = minitalk.h
-
+###-RM UTIL-#####################################
 RM = rm -rf
-
+###-COLOURS-#####################################
+COLOUR_GREEN=\033[35m
+COLOUR_RED=\033[0;31m
+COLOUR_BLUE=\033[0;36m
+COLOUR_END=\033[0m
+###-RULES-########################################
 all: $(NCLIENT) $(NSERVER)
 
 $(NSERVER): $(OSERVER)
-	@gcc $(CFLAGS) $(SERVER) -o $(NSERVER)
-	@echo "SERVER IS READY"
+	@$(CC) $(CFLAGS) $(SERVER) -o $(NSERVER)
+	@echo "$(COLOUR_GREEN)SERVER IS READY$(COLOUR_END)"
 
 $(NCLIENT): $(OCLIENT)
-	@gcc $(CFLAGS) $(CLIENT) -o $(NCLIENT)
-	@echo "CLIENT IS READY"
+	@$(CC) $(CFLAGS) $(CLIENT) -o $(NCLIENT)
+	@echo "$(COLOUR_GREEN)CLIENT IS READY$(COLOUR_END)"
 
 %.o:%.c
-	@gcc $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@$(RM) $(OCLIENT) $(OSERVER)
-	@echo "CLEANING OBJECT FILES..."
+	@echo "$(COLOUR_BLUE)CLEANING OBJECT FILES...$(COLOUR_END)"
 
 fclean: clean
 	@$(RM) $(NCLIENT) $(NSERVER)
-	@echo "CLEANING EXECUTABLE..."
+	@echo "$(COLOUR_BLUE)CLEANING EXECUTABLE...$(COLOUR_END)"
 
 re: fclean all
 
 .PHONY: all clean fclean re
+###-END-#########################################
