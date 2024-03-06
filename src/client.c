@@ -6,7 +6,7 @@
 /*   By: selcyilm <selcyilm@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/03 21:43:50 by selcyilm      #+#    #+#                 */
-/*   Updated: 2024/01/04 10:33:23 by selcyilm      ########   odam.nl         */
+/*   Updated: 2024/01/05 15:50:07 by selcyilm      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	ft_error(int err)
 {
-	printf("Error: ");
+	ft_putstr("Error: ");
 	if (err == 0)
-		printf("Missing arguments\n");
+		ft_putstr("Missing arguments\n");
 	if (err == 1)
-		printf("Invalid PID\n");
+		ft_putstr("Invalid PID\n");
 	if (err == 2)
-		printf("Invalid Message\n");
+		ft_putstr("Invalid Message\n");
 	exit(1);
 }
 
@@ -49,7 +49,7 @@ int	main(int ac, char **av)
 
 	if (ac != 3)
 		ft_error(0);
-	pid = atoi(av[1]);
+	pid = ft_atoi(av[1]);
 	if (pid <= 0)
 		ft_error(1);
 	if (!av[2])

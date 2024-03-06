@@ -21,11 +21,11 @@ COLOUR_END=\033[0m
 all: $(NCLIENT) $(NSERVER)
 
 $(NSERVER): $(OSERVER)
-	@$(CC) $(CFLAGS) $(SERVER) -o $(NSERVER)
+	@$(CC) $(CFLAGS) $(SERVER) src/utils.c -o $(NSERVER)
 	@echo "$(COLOUR_GREEN)SERVER IS READY$(COLOUR_END)"
 
 $(NCLIENT): $(OCLIENT)
-	@$(CC) $(CFLAGS) $(CLIENT) -o $(NCLIENT)
+	@$(CC) $(CFLAGS) $(CLIENT) src/utils.c -o $(NCLIENT)
 	@echo "$(COLOUR_GREEN)CLIENT IS READY$(COLOUR_END)"
 
 %.o:%.c
@@ -34,9 +34,10 @@ $(NCLIENT): $(OCLIENT)
 clean:
 	@$(RM) $(OCLIENT) $(OSERVER)
 	@echo "$(COLOUR_BLUE)CLEANING OBJECT FILES...$(COLOUR_END)"
+	@echo "REMOVED .O FILES"
 
 fclean: clean
-	@$(RM) $(NCLIENT) $(NSERVER)
+	@$(RM) $(NCLIENT) $(NSERVER) 
 	@echo "$(COLOUR_BLUE)CLEANING EXECUTABLE...$(COLOUR_END)"
 
 re: fclean all

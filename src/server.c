@@ -6,7 +6,7 @@
 /*   By: selcyilm <selcyilm@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/03 21:43:56 by selcyilm      #+#    #+#                 */
-/*   Updated: 2024/01/04 10:33:40 by selcyilm      ########   odam.nl         */
+/*   Updated: 2024/03/06 13:58:58 by selcyilm      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	handler(int signum)
 {
-	static int	i = 0;
+	static char	i = 0;
 	static int	bit = 0;
 
 	if (signum == SIGUSR1)
@@ -26,7 +26,7 @@ void	handler(int signum)
 		bit++;
 	if (bit == 8)
 	{
-		printf("%c", i);
+		ft_putchar(i);
 		bit = 0;
 		i = 0;
 	}
@@ -37,7 +37,9 @@ int	main(void)
 	int	pid;
 
 	pid = getpid();
-	printf("PID IS %d\nWaiting for message..\n", pid);
+	ft_putstr("PID IS ");
+	ft_putnbr(pid);
+	ft_putstr(" Waiting for message..\n");
 	while (1)
 	{
 		signal(SIGUSR1, handler);
