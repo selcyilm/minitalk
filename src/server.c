@@ -12,22 +12,22 @@
 
 #include "../include/minitalk.h"
 
-void	handler(int signum)
+void handler(int sig)
 {
+	static char	c = 0;
 	static int	i = 0;
-	static int	bit = 0;
 
-	if (signum == SIGUSR1)
+	if (sig == SIGUSR1)
+		i++;
+	if (sig == SIGUSR2)
 	{
-		i |= 0x01 << bit;
-		bit++;
+		c |= 1 << i;
+		i++;
 	}
-	else if (signum == SIGUSR2)
-		bit++;
-	if (bit == 8)
+	if (i == 8)
 	{
-		printf("%c", i);
-		bit = 0;
+		ft_putchar_fd(i, 1);
+		c = 0;
 		i = 0;
 	}
 }
@@ -36,13 +36,14 @@ int	main(void)
 {
 	int	pid;
 
+	struct sigaction sa;
+	sa.sa_handler = handler;
+	sa.sa_flags = SA_RESTART;
 	pid = getpid();
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	printf("PID IS %d\nWaiting for message..\n", pid);
 	while (1)
-	{
-		signal(SIGUSR1, handler);
-		signal(SIGUSR2, handler);
 		pause();
-	}
 	return (0);
 }

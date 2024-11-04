@@ -14,28 +14,27 @@
 
 void	ft_error(int err)
 {
-	printf("Error: ");
+	ft_putstr_fd("Error: ", 1);
 	if (err == 0)
-		printf("Missing arguments\n");
+		ft_putstr_fd("Missing arguments\n", 1);
 	if (err == 1)
-		printf("Invalid PID\n");
+		ft_putstr_fd("Invalid PID\n", 1);
 	if (err == 2)
-		printf("Invalid Message\n");
+		ft_putstr_fd("Invalid Message\n", 1);
 	exit(1);
 }
 
 void	send_signal(int pid, char c)
 {
-	static int	i;
+	static int	i = 0;
 
-	i = 0;
 	while (i < 8)
 	{
-		if (c & (0x01 << i))
-			kill(pid, SIGUSR1);
-		else
+		if ((c >> i) & 1)
 			kill(pid, SIGUSR2);
-		usleep(100);
+		else
+			kill(pid, SIGUSR1);
+		usleep(77);
 		i++;
 	}
 	if (i == 8)
