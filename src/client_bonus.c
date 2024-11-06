@@ -63,6 +63,7 @@ void	recieved_hnd(int signum)
 void	succes_handler(int signum)
 {
 	(void) signum;
+	ft_printf("The message has been recieved!\n");
 	exit(EXIT_SUCCESS);
 }
 

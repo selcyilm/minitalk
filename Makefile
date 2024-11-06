@@ -1,12 +1,18 @@
 ###-SOURCE CODE-#################################
 CLIENT = src/client.c
+CLIENTB = src/client_bonus.c
 SERVER = src/server.c
+SERVERB = src/server_bonus.c
 ###-OBJECT FILES-################################
 OCLIENT = $(CLIENT:.c=.o)
+OCLIENTB = $(CLIENTB:.c=.o)
 OSERVER = $(SERVER:.c=.o)
+OSERVERB = $(SERVERB:.c=.o)
 ###-EXECUTABLE NAMES-############################
 NCLIENT = client
+NCLIENTB = client_bonus
 NSERVER = server
+NSERVERB = server_bonus
 ###-FLAGS AND HEADERS-###########################
 CFLAGS = -Wall -Werror -Wextra
 CC = cc
@@ -33,17 +39,28 @@ $(NCLIENT): $(LIBFT) $(OCLIENT)
 $(LIBFT):
 	@make -C libft/ all
 
+$(NSERVERB): $(LIBFT) $(OSERVERB)
+	@$(CC) $(CFLAGS) $(SERVERB) $(LIBFT) -o $(NSERVER)
+	@echo "$(COLOUR_ORANGE)SERVER IS READY FOR BONUS..$(COLOUR_END)"
+
+$(NCLIENTB): $(LIBFT) $(OCLIENTB)
+	@$(CC) $(CFLAGS) $(CLIENTB) $(LIBFT) -o $(NCLIENT)
+	@echo "$(COLOUR_ORANGE)CLIENT IS READY FOR BONUS..$(COLOUR_END)"
+
 %.o:%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+bonus: $(NCLIENTB) $(NSERVERB)
+
+
 clean:
-	@make -s -C libft/ clean
-	@$(RM) $(OCLIENT) $(OSERVER)
+	@make -C libft/ clean
+	@$(RM) $(OCLIENT) $(OSERVER) $(OCLIENTB) $(OSERVERB)
 	@echo "$(COLOUR_BLUE)CLEANING OBJECT FILES...$(COLOUR_END)"
 
 fclean: clean
-	@make -s -C libft/ fclean
-	@$(RM) $(NCLIENT) $(NSERVER)
+	@make -C libft/ fclean
+	@$(RM) $(NCLIENT) $(NSERVER) $(NCLIENTB) $(NSERVERB)
 	@echo "$(COLOUR_BLUE)CLEANING EXECUTABLE...$(COLOUR_END)"
 
 re: fclean all
