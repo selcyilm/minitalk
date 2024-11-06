@@ -12,53 +12,82 @@
 
 #include "../include/minitalk.h"
 
-void	ft_error(int err)
+int	g_signal_recieved;
+
+void	error_msg(int err)
 {
-	ft_putstr_fd("Error: ", 1);
-	if (err == 0)
-		ft_putstr_fd("Missing arguments\n", 1);
 	if (err == 1)
-		ft_putstr_fd("Invalid PID\n", 1);
-	if (err == 2)
-		ft_putstr_fd("Invalid Message\n", 1);
+		ft_printf("Error: Missing Argument.\n");
+	else if (err == 2)
+		ft_printf("Error: No Message input.\n");
+	else if (err == 3)
+		ft_printf("Error: Invalid PID.\n");
+	else if (err == 4)
+		ft_printf("Error: Error sending message!\n");
 	exit(1);
 }
 
 void	send_signal(int pid, char c)
 {
-	static int	i = 0;
+	int	i;
+	int	bit;
 
-	while (i < 8)
+	bit = 0;
+	i = 7;
+	while (i >= 0)
 	{
-		if ((c >> i) & 1)
-			kill(pid, SIGUSR2);
+		bit = (c >> i) & 1;
+		if (bit == 1)
+		{
+			if (kill(pid, SIGUSR2) == -1)
+				error_msg(4);
+		}
 		else
-			kill(pid, SIGUSR1);
-		usleep(77);
-		i++;
+		{
+			if (kill(pid, SIGUSR1) == -1)
+				error_msg(4);
+		}
+		while (g_signal_recieved == 0)
+			;
+		g_signal_recieved = 0;
+		i--;
 	}
-	if (i == 8)
-		i = 0;
+}
+
+void	recieved_hnd(int signum)
+{
+	(void) signum;
+	g_signal_recieved = 1;
+}
+
+void	succes_handler(int signum)
+{
+	(void) signum;
+	ft_printf("The message has been recieved!\n");
+	exit(EXIT_SUCCESS);
 }
 
 int	main(int ac, char **av)
 {
-	int		pid;
-	int		i;
+	int	pid;
+	int	i;
 
 	if (ac != 3)
-		ft_error(0);
-	pid = atoi(av[1]);
-	if (pid <= 0)
-		ft_error(1);
-	if (!av[2])
-		ft_error(2);
+		error_msg(1);
+	if (!ft_strlen(av[1]))
+		error_msg(2);
 	i = 0;
-	while (av[2][i])
+	while (av[1][i])
 	{
-		send_signal(pid, av[2][i]);
+		if (!ft_isdigit(av[1][i]))
+			error_msg(3);
 		i++;
 	}
+	pid = ft_atoi(av[1]);
+	signal(SIGUSR1, &recieved_hnd);
+	signal(SIGUSR2, &succes_handler);
+	i = 0;
+	while (av[2][i])
+		send_signal(pid, av[2][i++]);
 	send_signal(pid, 0);
-	return (0);
 }

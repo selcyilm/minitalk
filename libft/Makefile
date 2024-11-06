@@ -64,6 +64,14 @@ LIB		=	ar rcs
 CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror
 
+PRINTF	=	ft_printf/ft_printf.o\
+			ft_printf/ft_strlen.o\
+			ft_printf/print_digit.o\
+			ft_printf/print_hex.o\
+			ft_printf/print_ptr.o\
+			ft_printf/print_str.o\
+			ft_printf/print_unsigned.o
+
 COLOUR_GREEN=\033[35m
 COLOUR_BLUE=\033[0;36m
 COLOUR_END=\033[0m
@@ -75,9 +83,12 @@ else
 	OBJ_SWITCH = $(OBJS)
 endif
 
-$(NAME)		:	$(OBJ_SWITCH)
+$(NAME)		:	$(PRINTF) $(OBJ_SWITCH)
 			@$(LIB) $@ $^
 			@echo "$(COLOUR_ORANGE)LIBFT.A IS READY TO GO$(COLOUR_END)"
+
+$(PRINF)	:
+			@make -C ./ft_printf
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -87,10 +98,12 @@ all			:	bonus $(NAME)
 
 clean		:
 			@$(RM) $(OBJS) $(OBJS_BONUS)
+			@make -s clean -C ./ft_printf
 			@echo "$(COLOUR_BLUE)CLEARING OBJECT FILES FOR LIBFT$(COLOUR_END)"
 
 fclean		:	clean
 			@$(RM) $(NAME)
+			@make -s fclean -C ./ft_printf
 			@echo "$(COLOUR_BLUE)CLEANING EXECUTABLE FOR LIBFT...$(COLOUR_END)"
 
 re		:	fclean all
